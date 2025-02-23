@@ -10,7 +10,6 @@ This repository contains a series of Python scripts for analyzing and predicting
 - [File Descriptions](#file-descriptions)
 - [Data Sources](#data-sources)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Installation
 
