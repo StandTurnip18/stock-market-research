@@ -88,6 +88,3 @@ The data for this project is sourced from various financial data APIs and reposi
 
 Contributions are welcome! If you have suggestions for improvements or additional features, please create an issue or submit a pull request.
 
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
