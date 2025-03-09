@@ -92,7 +92,7 @@ pip install pandas numpy scikit-learn torch xgboost matplotlib seaborn numpy-fin
   - Adjusts dynamically for varying market conditions.
   - 
 ## Get Data Descriptions
-### 'excel_to_pickle.py'
+### `excel_to_pickle.py`
 
 - **Functionality**:
   - Computes necessary financial indicators like:
@@ -105,7 +105,7 @@ pip install pandas numpy scikit-learn torch xgboost matplotlib seaborn numpy-fin
   - Saves as pickle file for fast access
 
 ## Image Descriptions
-- Images returned by 'graph_seasonality' when using DJIA data
+- Images returned by `graph_seasonality` when using DJIA data
   - Shows average returns by:
   - Day of Week
   - Month of Year
