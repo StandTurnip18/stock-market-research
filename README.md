@@ -26,7 +26,7 @@ pip install pandas numpy scikit-learn torch xgboost matplotlib seaborn numpy-fin
 4. Analyze seasonal trends using `graph_seasonality.py` and `analyze_seasonality.py`.
 5. Compute Internal Rate of Return (IRR) for different trading strategies using `compute_irr.py`.
 
-## File Descriptions
+## Source Code Descriptions
 
 ### `get_raw_data_s&p500.py`
 
@@ -90,6 +90,20 @@ pip install pandas numpy scikit-learn torch xgboost matplotlib seaborn numpy-fin
     - Investing daily
   - Uses `numpy_financial` for IRR calculations.
   - Adjusts dynamically for varying market conditions.
+  - 
+## Get Data Descriptions
+### 'excel_to_pickle.py'
+
+- **Functionality**:
+  - Computes necessary financial indicators like:
+    - Rolling Averages
+    - Percent Change
+    - Bollinger Bands
+    - Volatility
+  - And other metrics like:
+    - Day/Month/Year
+  - Saves as pickle file for fast access
+
 
 ## Data Sources
 
