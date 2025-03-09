@@ -109,9 +109,9 @@ pip install pandas numpy scikit-learn torch xgboost matplotlib seaborn numpy-fin
 ## Image Descriptions
 - Images returned by `graph_seasonality` when using DJIA data
   - Shows average returns by:
-  - Day of Week
-  - Month of Year
-  - Day of Month  
+    - Day of Week
+    - Month of Year
+    - Day of Month  
 
 
 ## Data Sources
