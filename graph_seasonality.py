@@ -273,9 +273,9 @@ def main():
     start_date = "1900-01-01"
     end_date = "2024-01-01"
     
-    #dow_analysis_day(df, file_path,start_date,end_date)
-    #dow_analysis_month(df, file_path,start_date,end_date)
-    #dow_analysis_week(df, file_path,start_date,end_date)  
+    dow_analysis_day(df, file_path,start_date,end_date)
+    dow_analysis_month(df, file_path,start_date,end_date)
+    dow_analysis_week(df, file_path,start_date,end_date)  
     
     # Compute the yearly weekly statistics from 1900 to 2024
     yearly_stats = compute_yearly_weekly_statistics(df, file_path, 1900, 2024)
