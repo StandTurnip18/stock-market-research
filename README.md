@@ -104,6 +104,13 @@ pip install pandas numpy scikit-learn torch xgboost matplotlib seaborn numpy-fin
     - Day/Month/Year
   - Saves as pickle file for fast access
 
+## Image Descriptions
+- Images returned by 'graph_seasonality' when using DJIA data
+  - Shows average returns by:
+  - Day of Week
+  - Month of Year
+  - Day of Month  
+
 
 ## Data Sources
 
