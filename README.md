@@ -7,6 +7,8 @@ This repository contains a series of Python scripts for analyzing and predicting
 - [Installation](#installation)
 - [Usage](#usage)
 - [Source Code Descriptions](#source-code-descriptions)
+- [Get Data Descriptions](#get-data-descriptions)
+- [Image Descriptions](#image-descriptions)
 - [Data Sources](#data-sources)
 - [Contributing](#contributing)
 
