@@ -2,6 +2,7 @@ import yfinance as yf
 import numpy as np
 import pandas as pd
 import time
+import datetime
 import pickle
 
 
@@ -16,7 +17,13 @@ def calculate_features(df, data):
     # Feature: Previous Change
     df["Percent Change"] = df["Close"].pct_change()
     df["Previous Change"] = df["Percent Change"]
-    df["Today Change"] = (df["Percent Change"] > 0).astype(int)  
+    df["Today Change"] = (df["Percent Change"] > 0).astype(int) 
+    
+    #Day, Month, Year
+    df.loc[:, "Date"] = df.index
+    df["Month"] = df["Date"].dt.month  
+    df["Day"] = df["Date"].dt.day  
+    df["Year"] = df["Date"].dt.year 
 
     # Moving Averages
     df["10d MA"] = df["Close"].rolling(window=10).mean()
@@ -72,8 +79,6 @@ def calculate_features(df, data):
     df.loc[:, "Unemployment Rate"] = unemployment_data.values
 
     df.loc[:, "Target"] = (df["Percent Change"].shift(-1) > 0).astype(int)  # Predict the next day's closing price
-
-    df.loc[:, "Date"] = df.index
     
     df.replace([np.inf, -np.inf], np.nan, inplace=True)
     # Drop NaN values introduced by rolling calculations
@@ -154,6 +159,7 @@ def main():
     print(f"All Features in Data: {list(data['AAPL'].columns)}")
     print(f"Head of data: {data['AAPL'].head}")
     print(f"Data saved to {saved_as}")
+    
 
 if __name__ == "__main__":
     main()
