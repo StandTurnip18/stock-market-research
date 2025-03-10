@@ -112,6 +112,13 @@ pip install pandas numpy scikit-learn torch xgboost matplotlib seaborn numpy-fin
     - Bollinger Bands
     - Volume   
 
+### `get_raw_data.py`
+- **Functionality**:
+  - Uses yfinance API to gather information on S&P 500 Companies
+    - Open/Close
+    - Date
+    - Shares Outstanding
+      
 ## Image Descriptions
 - Images returned by `graph_seasonality` when using DJIA data
   - Shows average returns by:
