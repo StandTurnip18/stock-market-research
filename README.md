@@ -94,17 +94,23 @@ pip install pandas numpy scikit-learn torch xgboost matplotlib seaborn numpy-fin
   - Adjusts dynamically for varying market conditions.
   - 
 ## Get Data Descriptions
-### `excel_to_pickle.py`
+### `excel_to_pickle_simplified.py`
 
 - **Functionality**:
   - Computes necessary financial indicators like:
-    - Rolling Averages
     - Percent Change
-    - Bollinger Bands
-    - Volatility
   - And other metrics like:
     - Day/Month/Year
   - Saves as pickle file for fast access
+  - 
+### `analyze_data.py`
+- **Functionality**:
+  - Computes financial indicators to be used in AI/Machine Learning Model Training
+    - Percent Change
+    - Moving Averages (and exponential moving averages)
+    - Volatility
+    - Bollinger Bands
+    - Volume   
 
 ## Image Descriptions
 - Images returned by `graph_seasonality` when using DJIA data
