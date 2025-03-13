@@ -3,9 +3,11 @@ import pandas as pd
 import pickle
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
+import datetime as dt
 import os
 
 pd.set_option('display.max_rows', 500)  # Replace 500 with the number of rows you want to see
+
 def save_data_to_pickle(stats, filename):
     # Save the results to a pickle file for later use
     save_dir = r"C:\Users\bsarr\OneDrive\Desktop\Desktop Icons\College Work\Sophomore Year\2nd Semester\Stock Market Research\project 2"
@@ -14,6 +16,7 @@ def save_data_to_pickle(stats, filename):
     with open(save_path, "wb") as f:
         pickle.dump(stats, f)
     print(f"Statistics saved to: {filename}")
+    
     
 def compute_weekly_statistics(df, file_path):
     """
@@ -284,20 +287,144 @@ def compute_yearly_monthly_statistics(df, file_path, start_year, end_year):
     save_data_to_pickle(yearly_results, "yearly_monthly_results.pkl")
 
 
+
+    # Extract day of the month (1-31)
+    data['day_of_month'] = data.index.day  
+    daily_avg = data.groupby('day_of_month').mean()
+
+    plt.figure(figsize=(8, 5))
+    plt.plot(daily_avg.index, daily_avg, marker='o', linestyle='-')
+    plt.title('Daily Trends')
+    plt.xlabel('Day of the Month')
+    plt.ylabel('Value')
+    plt.grid(True)
+    plt.show()
+
+
+def plot_weekly_trends(df, start_date,end_date,window=250):  # number of years * 50 (approx) weeks per year
+    """
+    Plots rolling weekly trends in percent changes over a 3-year window.
+    """
+    df = df.copy()
     
+    # Filter by date range if specified
+    if start_date:
+        df = df[df["Date"] >= start_date]
+    if end_date:
+        df = df[df["Date"] <= end_date]
+        
+    df["Weekday"] = df["Date"].dt.weekday  # 0=Monday, 6=Sunday
+
+    # Sort by date to ensure rolling calculations work correctly
+    df = df.sort_values(by="Date")
+
+    # Compute rolling mean for each weekday over the 3-year window
+    rolling_means = df.groupby("Weekday")["Percent Change"].rolling(window=window, min_periods=50).mean().reset_index(level=0, drop=True)
     
+    # Convert rolling means into a dictionary of lists
+    weekly_rolling = {day: rolling_means[df["Weekday"] == day].values for day in range(7)}
+
+    # Plot results
+    plt.figure(figsize=(10, 6))
+    
+    days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+    for day in range(7):
+        plt.plot(df["Date"][df["Weekday"] == day], weekly_rolling[day], label=days[day])
+
+    plt.title("Rolling Weekly Returns")
+    plt.xlabel("Date")
+    plt.ylabel("Rolling Mean % Change")
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+def plot_day_trends(df, start_date, end_date, window=12,):  # 12 (number of 1st in a year, approx) * number of years 
+    """
+    Plots rolling trends in percent changes based on days of the month over a 3-year window.
+    """
+    df = df.copy()
+    
+    # Filter by date range if specified
+    if start_date:
+        df = df[df["Date"] >= start_date]
+    if end_date:
+        df = df[df["Date"] <= end_date]
+    
+    # Sort by date to ensure rolling calculations work correctly
+    df = df.sort_values(by="Date")
+
+    # Compute rolling mean for each day of the month
+    rolling_means = df.groupby("Day")["Percent Change"].rolling(window=window, min_periods=window).mean().reset_index(level=0, drop=True)
+    
+    # Convert rolling means into a dictionary of lists
+    monthly_rolling = {day: rolling_means[df["Day"] == day].values for day in range(1, 32)}
+
+    # Plot results
+    plt.figure(figsize=(12, 6))
+    
+    for day in range(1, 32):
+        plt.plot(df["Date"][df["Day"] == day], monthly_rolling[day], label=f"Day {day}")
+
+    plt.title("Rolling Day of Month Returns")
+    plt.xlabel("Date")
+    plt.ylabel("Rolling Mean % Change")
+    plt.legend(ncol=4, fontsize=8)
+    plt.grid(True)
+    plt.show()
+
+def plot_monthly_trends(df, start_date,end_date,window=60):  # 12 (months per year) * number of years 
+    """
+    Plots rolling trends in percent changes based on days of the month over a 3-year window.
+    """
+    df = df.copy()
+    
+    # Filter by date range if specified
+    if start_date:
+        df = df[df["Date"] >= start_date]
+    if end_date:
+        df = df[df["Date"] <= end_date]
+        
+    #df["Month"] = df["Date"].dt.month  # Extract month of year (1-12)
+
+    # Sort by date to ensure rolling calculations work correctly
+    df = df.sort_values(by="Date")
+
+    # Compute rolling mean for each day of the month
+    rolling_means = df.groupby("Month")["Percent Change"].rolling(window=window, min_periods=24).mean().reset_index(level=0, drop=True)
+    
+    # Convert rolling means into a dictionary of lists
+    monthly_rolling = {day: rolling_means[df["Month"] == day].values for day in range(1, 13)}
+
+    # Plot results
+    plt.figure(figsize=(12, 6))
+    
+    for month in range(1, 13):
+        plt.plot(df["Date"][df["Month"] == month], monthly_rolling[month], label=f"Month {month}")
+
+    plt.title("Rolling Monthly Returns")
+    plt.xlabel("Date")
+    plt.ylabel("Rolling Mean % Change")
+    plt.legend(ncol=4, fontsize=8)
+    plt.grid(True)
+    plt.show()
+
 def main():
     file_path = "dow_jones_simplified.pkl"
     #file_path = r"C:\Users\bsarr\Desktop\2nd_Environment\s&p500_combined_data.pkl"
+        
     with open(file_path, 'rb') as f:
         df= pickle.load(f)
-    
+        
     start_date = "1900-01-01"
-    end_date = "2024-01-01"
-    
+    end_date = "2025-01-01"
+
     dow_analysis_day(df, file_path,start_date,end_date)
     dow_analysis_month(df, file_path,start_date,end_date)
     dow_analysis_week(df, file_path,start_date,end_date)  
+    
+    plot_weekly_trends(df, start_date,end_date)
+    plot_day_trends(df,start_date,end_date)
+    plot_monthly_trends(df,start_date,end_date)
     
 if __name__ == "__main__":
     main()
